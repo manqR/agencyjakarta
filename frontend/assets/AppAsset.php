@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'styles/webfont.css',
+        'vendors/select2/dist/css/select2.css',
         'styles/climacons-font.css',
         'vendors/bootstrap/dist/css/bootstrap.css',
         'styles/font-awesome.css',
@@ -21,32 +22,30 @@ class AppAsset extends AssetBundle
         'styles/animate.css',
         'styles/app.css',
         'styles/app.skins.css',
+        'vendors/summernote/dist/summernote.css',  
     ];
     public $js = [
         'scripts/helpers/modernizr.js',
         // 'vendors/jquery/dist/jquery.js',
-        'vendors/bootstrap/dist/js/bootstrap.js',
+        // 'vendors/bootstrap/dist/js/bootstrap.js',
+        'scripts/tooltip.js',
         'vendors/fastclick/lib/fastclick.js',
+        'vendors/select2/dist/js/select2.js',
         'vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js',
         'scripts/helpers/smartresize.js',
         'scripts/constants.js',
+        'vendors/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.min.js',
+        'vendors/summernote/dist/summernote.js',
+        'scripts/forms/wysiwyg.js',
         'scripts/main.js',
-        'vendors/flot/jquery.flot.js',
-        'vendors/flot/jquery.flot.resize.js',
-        'vendors/flot/jquery.flot.categories.js',
-        'vendors/flot/jquery.flot.stack.js',
-        'vendors/flot/jquery.flot.time.js',
-        'vendors/flot/jquery.flot.pie.js',
-        'vendors/flot-spline/js/jquery.flot.spline.js',
-        'vendors/flot.orderbars/js/jquery.flot.orderBars.js',
         'scripts/helpers/sameheight.js',
-        'scripts/ui/dashboard.js',
+        'scripts/forms/plugins.js',
 
 
         
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        // 'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 }

@@ -34,7 +34,6 @@ class Event extends \yii\db\ActiveRecord
         return [
             [['contract_id', 'event_name', 'grade_spg', 'img_event', 'description', 'price', 'status'], 'required'],
             [['description'], 'string'],
-            [['price'], 'number'],
             [['status'], 'integer'],
             [['contract_id'], 'string', 'max' => 20],
             [['event_name'], 'string', 'max' => 255],
