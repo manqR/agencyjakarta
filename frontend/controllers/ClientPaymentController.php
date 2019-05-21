@@ -3,17 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Slider;
-use frontend\models\SliderSearch;
+use frontend\models\PembayaranClient;
+use frontend\models\PembayaranClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * SliderController implements the CRUD actions for Slider model.
+ * ClientPaymentController implements the CRUD actions for PembayaranClient model.
  */
-class SliderController extends Controller
+class ClientPaymentController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class SliderController extends Controller
     }
 
     /**
-     * Lists all Slider models.
+     * Lists all PembayaranClient models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SliderSearch();
+        $searchModel = new PembayaranClientSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Displays a single Slider model.
+     * Displays a single PembayaranClient model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,20 +58,16 @@ class SliderController extends Controller
     }
 
     /**
-     * Creates a new Slider model.
+     * Creates a new PembayaranClient model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Slider();
+        $model = new PembayaranClient();
 
-        if ($model->load(Yii::$app->request->post())){
-
-
-            $model->save();
-
-            return $this->redirect(['view', 'id' => $model->idslider]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->urutan]);
         }
 
         return $this->render('create', [
@@ -81,7 +76,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Updates an existing Slider model.
+     * Updates an existing PembayaranClient model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,11 +86,8 @@ class SliderController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())){
-
-
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->idslider]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->urutan]);
         }
 
         return $this->render('update', [
@@ -104,7 +96,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Deletes an existing Slider model.
+     * Deletes an existing PembayaranClient model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +110,15 @@ class SliderController extends Controller
     }
 
     /**
-     * Finds the Slider model based on its primary key value.
+     * Finds the PembayaranClient model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Slider the loaded model
+     * @return PembayaranClient the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Slider::findOne($id)) !== null) {
+        if (($model = PembayaranClient::findOne($id)) !== null) {
             return $model;
         }
 

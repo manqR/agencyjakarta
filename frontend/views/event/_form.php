@@ -4,12 +4,23 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\View;
 use yii\helpers\ArrayHelper;
-
 use frontend\models\Grade;
 
 /* @var $model frontend\models\Event */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerJs("
+    function Contract(){
+        tableShow('.datacontract','?r=api/contract');
+    }
+    $(document).on(\"click\", \".choose-contract\", function () {		
+        var data = $(this).data('id');
+        $('.contractID').val(data);
+        $('.contract').modal('hide');      
+    });
+    Contract();
+
+");
 $this->registerJs("
 				
 	function formatRupiah(angka, prefix){
@@ -35,7 +46,7 @@ $this->registerJs("
 View::POS_HEAD);
 
 $this->registerCss("
-    .search-open-icon{
+    .search-open-icon , .choose-contract{
         cursor:pointer
     }
 ");
@@ -43,14 +54,20 @@ $this->registerCss("
 
 <div class="event-form card card-block">
 
-    <?php $form = ActiveForm::begin(); ?>
-
+    <?php  $form = ActiveForm::begin([
+            'options'=>[
+                    'enctype'=>'multipart/form-data',
+                    ]			
+                ]); 
+            
+           
+    ?> 
     <label>Contract ID</label>
     <div class="input-group m-b">
-        <input type="text" class="form-control" readonly>
+        <input type="text" class="form-control contractID" readonly>
         <span class="input-group-addon"><i class="search-open-icon icon-magnifier" aria-hidden="true" title="Search Contract" data-toggle="modal" data-target=".contract"></i></span>
     </div>
-    <?= $form->field($model, 'contract_id')->hiddenInput(['maxlength' => true])->label(false)?>
+    <?= $form->field($model, 'contract_id')->hiddenInput(['maxlength' => true,'class'=>'contractID'])->label(false)?>
 
     <?= $form->field($model, 'event_name')->textInput(['maxlength' => true]) ?>
 
@@ -63,7 +80,7 @@ $this->registerCss("
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6,'class'=>'summernote']) ?>
 
-    <?= $form->field($model, 'price')->textInput(['onkeyup' => 'js:formatAsRupiah(this);' ]) ?>
+    <?= $form->field($model, 'price')->textInput(['onkeyup' => 'js:formatAsRupiah(this);' ])->label('Event Price / Person') ?>
 
     <?= $form->field($model, 'status', ['options' => ['tag' => 'false']])-> dropDownList([1=> 'Enable', 0=>'Disable'],
         ['prompt'=>'- Select -','class'=>'select2 m-b-1','style' => 'width: 100%']);  

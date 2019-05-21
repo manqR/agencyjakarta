@@ -45,6 +45,7 @@ class Contract extends \yii\db\ActiveRecord
             [['idclient', 'number_of_spg', 'contract_status', 'payment_status'], 'integer'],
             [['start_date', 'end_date', 'created_date', 'update_date'], 'safe'],
             [['description'], 'string'],
+            [['pic_email'], 'email'],
             [['contract_id', 'pic_phone'], 'string', 'max' => 20],
             [['pic_name', 'pic_email', 'upload_file', 'created_by', 'update_by'], 'string', 'max' => 50],
         ];

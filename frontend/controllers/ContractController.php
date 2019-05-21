@@ -67,7 +67,9 @@ class ContractController extends Controller
     {
         $model = new Contract();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())){
+            
+            $model->save();
             return $this->redirect(['view', 'contract_id' => $model->contract_id, 'urutan' => $model->urutan]);
         }
 
@@ -88,7 +90,9 @@ class ContractController extends Controller
     {
         $model = $this->findModel($contract_id, $urutan);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())){
+            
+            $model->save();
             return $this->redirect(['view', 'contract_id' => $model->contract_id, 'urutan' => $model->urutan]);
         }
 

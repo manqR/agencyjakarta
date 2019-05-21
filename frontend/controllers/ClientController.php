@@ -26,17 +26,6 @@ class ClientController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                  // allow authenticated users
-                      [
-                        'allow' => true,
-                        'roles' => ['@'],
-                      ],
-                  // everything else is denied
-                ],
-            ],
         ];
     }
 
@@ -77,7 +66,9 @@ class ClientController extends Controller
     {
         $model = new Client();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())){
+            
+            $model->save();
             return $this->redirect(['view', 'id' => $model->idclient]);
         }
 
@@ -97,7 +88,10 @@ class ClientController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())){
+            
+            
+            $model->save();
             return $this->redirect(['view', 'id' => $model->idclient]);
         }
 

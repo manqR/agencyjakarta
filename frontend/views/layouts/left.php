@@ -111,12 +111,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?r=client/contract">
+                        <a href="?r=contract/index">
                         <span>Contract</span>
                         </a>
                     </li>
                     <li>
-                        <a href="?r=client/payment">
+                        <a href="?r=client-payment/index">
                         <span>Payment</span>
                         </a>
                     </li>                   

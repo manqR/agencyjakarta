@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Slider */
+/* @var $model frontend\models\PembayaranClient */
 
-$this->title = 'Create Slider';
-$this->params['breadcrumbs'][] = ['label' => 'Sliders', 'url' => ['index']];
+$this->title = 'Make Payment';
+$this->params['breadcrumbs'][] = ['label' => 'Client Payment', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="slider-create">
+<div class="pembayaran-client-create">
 
     <h4><?= Html::encode($this->title) ?></h4>
 

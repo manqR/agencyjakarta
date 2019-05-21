@@ -8,6 +8,7 @@ use frontend\models\EventSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -66,7 +67,9 @@ class EventController extends Controller
     {
         $model = new Event();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())){
+            
+            $model->save();
             return $this->redirect(['view', 'id' => $model->event_id]);
         }
 
@@ -86,7 +89,9 @@ class EventController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())){
+            
+            $model->save();
             return $this->redirect(['view', 'id' => $model->event_id]);
         }
 

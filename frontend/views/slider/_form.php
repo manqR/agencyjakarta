@@ -8,15 +8,17 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="slider-form">
+<div class="slider-form card card-block">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'slider_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'slider_image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'slider_image')->fileInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'flag')->textInput() ?>
+    <?= $form->field($model, 'flag', ['options' => ['tag' => 'false']])-> dropDownList([1=> 'Enable', 0=>'Disable'],
+        ['prompt'=>'- Select -','class'=>'select2 m-b-1','style' => 'width: 100%'])->label('Status');  
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

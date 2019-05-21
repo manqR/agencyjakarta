@@ -13,6 +13,8 @@ use frontend\models\Spg;
 use frontend\models\Provinces;
 use frontend\models\SpgSocial;
 use frontend\models\SpgExperience;
+use frontend\models\Contract;
+use frontend\models\Client;
 
 
 
@@ -321,6 +323,89 @@ class ApiController extends Controller{
 			
 			}
 		}
+	}
+
+
+	public function actionContract(){
+		
+		$output = array();
+
+		$model = Contract::find()
+				->where(['contract_status'=>1])
+				->all();
+		
+		foreach($model as $i => $models):
+
+			$output[$i] = array (
+				$models->contract_id,
+				$models->pic_name,
+				$models->start_date,
+				$models->end_date,
+				$models->description,
+				'<i class="choose-contract icon-plus" aria-hidden="true" data-id="'.$models->contract_id.'"></i>'
+			);
+		endforeach;
+
+		$data = [
+			'data'=>$output
+		];
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		return $data;
+
+	}
+	public function actionClient(){
+		
+		$output = array();
+
+		$model = Client::find()
+				->all();
+		
+		foreach($model as $i => $models):
+
+			$output[$i] = array (
+				$models->name,
+				$models->company_name,
+				$models->address,
+				$models->email,
+				$models->flag,
+				'<i class="choose-client icon-plus" aria-hidden="true" data-id="'.$models->idclient.'"></i>'
+			);
+		endforeach;
+
+		$data = [
+			'data'=>$output
+		];
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		return $data;
+
+	}
+		
+	public function actionInvoice(){
+		
+		$output = array();
+
+		$model = TagihanClient::find()
+				->where(['<>','nominal',0])
+				->all();
+		
+		foreach($model as $i => $models):
+
+			$output[$i] = array (
+				$models->invoice_id,
+				$models->contract_id,
+				$models->client_id,
+				$models->nominal,
+				$models->due_date,
+				'<i class="choose-invoice icon-plus" aria-hidden="true" data-id="'.$models->invoice_id.'"></i>'
+			);
+		endforeach;
+
+		$data = [
+			'data'=>$output
+		];
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		return $data;
+
 	}
 		
 		

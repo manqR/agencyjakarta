@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'vendors/select2/dist/css/select2.css',
         'styles/climacons-font.css',
         'vendors/bootstrap/dist/css/bootstrap.css',
+        'vendors/datatables/media/css/dataTables.bootstrap.css',
         'styles/font-awesome.css',
         'styles/card.css',
         'styles/sli.css',
@@ -31,6 +32,7 @@ class AppAsset extends AssetBundle
         'scripts/tooltip.js',
         'vendors/fastclick/lib/fastclick.js',
         'vendors/select2/dist/js/select2.js',
+        'vendors/datatables/media/js/jquery.dataTables.js',
         'vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js',
         'scripts/helpers/smartresize.js',
         'scripts/constants.js',
@@ -40,6 +42,7 @@ class AppAsset extends AssetBundle
         'scripts/main.js',
         'scripts/helpers/sameheight.js',
         'scripts/forms/plugins.js',
+        'inc/apiTable.js',
 
 
         
