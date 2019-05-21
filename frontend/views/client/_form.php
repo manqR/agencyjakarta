@@ -31,7 +31,7 @@ use frontend\models\City;
 
     <?= $form->field($model, 'city', ['options' => ['tag' => 'false']])-> dropDownList(
         ArrayHelper::map(City::find()->all(),'city_name','city_name'),
-        ['prompt'=>'- Select -','class'=>'select2 m-b-1','style' => 'width: 100%'])->label('Grade');  
+        ['prompt'=>'- Select -','class'=>'select2 m-b-1','style' => 'width: 100%']);  
     ?>
 
 
