@@ -68,8 +68,10 @@ class ClientController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
             
+            $model->created_date = date('Y-m-d H:i:s');            
             $model->save();
-            return $this->redirect(['view', 'id' => $model->idclient]);
+            Yii::$app->session->setFlash('success');
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [

@@ -12,6 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-index">
 
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div>
+            <div class="alert alert-success">Insert Successfull ! </div>
+        </div>
+    <?php endif; ?>
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -25,17 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idclient',
             'name',
             'username',
-            'password',
             'company_name',
-            //'address:ntext',
-            //'phone_number',
-            //'email:email',
-            //'city',
+            'address:ntext',
+            'phone_number',
+            'email:email',
+            'city',
             //'created_date',
-            //'flag',
+            [
+                'label'=>'Status',
+                'format' => 'raw',
+                'value'=> function ($model) {
+                    return $model->flag == 1 ? '<span class="label label-success">Active</span>': '<span class="label label-danger">Disable</span>';
+
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

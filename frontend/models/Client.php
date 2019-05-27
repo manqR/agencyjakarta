@@ -41,7 +41,9 @@ class Client extends \yii\db\ActiveRecord
             [['created_date'], 'safe'],
             [['flag'], 'integer'],
             [['name', 'username', 'password', 'company_name', 'phone_number', 'email', 'city'], 'string', 'max' => 50],
-            [['username'], 'unique'],
+            ['username', 'unique', 'targetClass' => '\frontend\models\Client', 'message' => 'This username has already been taken.'],
+            ['username', 'match', 'pattern' => '/^[a-z]\w*$/i'],
+            
             [['email'], 'unique'],
         ];
     }
