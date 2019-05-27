@@ -55,11 +55,11 @@ $this->registerCss("
 <div class="event-form card card-block">
 
     <?php  $form = ActiveForm::begin([
-            'options'=>[
-                    'enctype'=>'multipart/form-data',
-                    ]			
-                ]); 
-            
+    	'options'=>[
+    	        'enctype'=>'multipart/form-data',
+    	        ]			
+    	    ]); 
+		
            
     ?> 
     <label>Contract ID</label>

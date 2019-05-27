@@ -68,11 +68,22 @@ class SliderController extends Controller
         $model = new Slider();
 
         if ($model->load(Yii::$app->request->post())){
+            
+            $model->slider_image = UploadedFile::getInstance($model,'slider_image');
+            
+            if(isset($model->slider_image)){
+                $uploadDir = Yii::getAlias('@webroot/upload/slider/'.str_replace(' ', '', $model->slider_name));
+                if(!is_dir("upload/slider/". str_replace(' ', '', $model->slider_name) ."/")) {
+                    mkdir("upload/slider/".  str_replace(' ', '', $model->slider_name)  ."/");
+                }                                           
+                $model->slider_image->saveAs($uploadDir.'/'.$model->slider_image);	
+            }else{
+                $model->slider_image = $model->slider_image;
+            }
 
-
-            $model->save();
-
-            return $this->redirect(['view', 'id' => $model->idslider]);
+            $model->save(false);
+            Yii::$app->session->setFlash('success');
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -93,9 +104,21 @@ class SliderController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
 
+            $model->slider_image = UploadedFile::getInstance($model,'slider_image');
+            if(isset($model->slider_image)){
+                $uploadDir = Yii::getAlias('@webroot/upload/event/'.str_replace(' ', '', $model->slider_name));
+                if(!is_dir("upload/event/". str_replace(' ', '', $model->slider_name) ."/")) {
+                    mkdir("upload/event/".  str_replace(' ', '', $model->slider_name)  ."/");
+                }                           
+                $model->slider_image->saveAs($uploadDir.'/'.$model->slider_image);	
+            }else{
+                $x = $this->findModel($id);
+                $model->slider_image = $x->slider_image;            
+            }
 
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->idslider]);
+            $model->save(false);
+            Yii::$app->session->setFlash('update');
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

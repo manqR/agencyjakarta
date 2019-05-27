@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
+include 'inc/money.php';
 /**
  * EventController implements the CRUD actions for Event model.
  */
@@ -68,9 +69,22 @@ class EventController extends Controller
         $model = new Event();
 
         if ($model->load(Yii::$app->request->post())){
-            
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->event_id]);
+
+            $model->img_event = UploadedFile::getInstance($model,'img_event');
+            if(isset($model->img_event)){
+                $uploadDir = Yii::getAlias('@webroot/upload/event/'.str_replace(' ', '', $model->event_name));
+                if(!is_dir("upload/event/". str_replace(' ', '', $model->event_name) ."/")) {
+                    mkdir("upload/event/".  str_replace(' ', '', $model->event_name)  ."/");
+                }                                           
+                $model->img_event->saveAs($uploadDir.'/'.$model->img_event);	
+            }else{
+                $model->img_event = $model->img_event;
+            }
+
+            $model->price = SaveRupiah($model->price);
+            $model->save(false);
+            Yii::$app->session->setFlash('success');
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -91,8 +105,22 @@ class EventController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
             
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->event_id]);
+            $model->img_event = UploadedFile::getInstance($model,'img_event');
+            if(isset($model->img_event)){
+                $uploadDir = Yii::getAlias('@webroot/upload/event/'.str_replace(' ', '', $model->event_name));
+                if(!is_dir("upload/event/". str_replace(' ', '', $model->event_name) ."/")) {
+                    mkdir("upload/event/".  str_replace(' ', '', $model->event_name)  ."/");
+                }                           
+                $model->img_event->saveAs($uploadDir.'/'.$model->img_event);	
+            }else{
+                $x = $this->findModel($id);
+                $model->img_event = $x->img_event;            
+            }
+
+            $model->price = SaveRupiah($model->price);
+            $model->save(false);
+            Yii::$app->session->setFlash('update');
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

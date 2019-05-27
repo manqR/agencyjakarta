@@ -12,6 +12,18 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index">
 
+
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div>
+            <div class="alert alert-success">Insert Successfull ! </div>
+        </div>
+    <?php endif; ?>
+    <?php if (Yii::$app->session->hasFlash('update')): ?>
+        <div>
+            <div class="alert alert-success">Update Successfull ! </div>
+        </div>
+    <?php endif; ?>
+
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

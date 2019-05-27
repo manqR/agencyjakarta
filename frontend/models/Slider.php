@@ -30,7 +30,8 @@ class Slider extends \yii\db\ActiveRecord
         return [
             [['flag'], 'required'],
             [['flag'], 'integer'],
-            [['slider_name', 'slider_image'], 'string', 'max' => 50],
+            [['slider_name'], 'string', 'max' => 50],
+            [['slider_image'], 'file', 'extensions' => 'jpg,png'],
         ];
     }
 

@@ -38,7 +38,7 @@ class Event extends \yii\db\ActiveRecord
             [['contract_id'], 'string', 'max' => 20],
             [['event_name'], 'string', 'max' => 255],
             [['grade_spg'], 'string', 'max' => 5],
-            [['img_event'], 'string', 'max' => 50],
+            [['img_event'], 'file', 'extensions' => 'jpg,png'],
         ];
     }
 
