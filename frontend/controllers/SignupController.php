@@ -32,27 +32,23 @@ class SignupController extends Controller{
      */
     
     public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
+	{
 		return array_merge(parent::behaviors(), [
+	
+			// For cross-domain AJAX request
 			'corsFilter'  => [
 				'class' => \yii\filters\Cors::className(),
-				'cors'  => [					
-                    'Access-Control-Allow-Origin'      =>static::allowedDomains(),			
+				'cors'  => [
+					// restrict access to domains:
+					'Origin'                           => static::allowedDomains(),
+					'Access-Control-Request-Method'    => ['POST'],
 					'Access-Control-Allow-Credentials' => true,
-					'Access-Control-Max-Age'           => 3600,    
+					'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
 				],
 			],
-
+	
 		]);
-    }
+	}
 
     // public function beforeAction($action) {
     //     $this->enableCsrfValidation = false;
@@ -63,6 +59,8 @@ class SignupController extends Controller{
         
         $model = new Spg();
         $data = array();
+		
+		
         if($_POST){
             $model->username = $_POST['username'];
             $model->email = $_POST['email'];
@@ -72,8 +70,14 @@ class SignupController extends Controller{
             $model->created_at = date('Y-m-d');
             $model->save(false);
             if($model){
-                $data = Yii::$app->request->csrfToken;
+				
+                $data = [
+						'token' => Yii::$app->request->csrfToken,
+						'msg' => 'success',
+					];
+				
             }
+			
             
         }else{
             $data = [
@@ -81,9 +85,9 @@ class SignupController extends Controller{
             ];
         }
        
-        // Yii::$app->response->format = Response::FORMAT_JSON;
-        $data = json_encode($data);
-        echo $data;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        // $data = json_encode($data);
+        return $data;
 
         // echo 's';
 
