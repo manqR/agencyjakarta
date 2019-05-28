@@ -368,7 +368,7 @@ class ApiController extends Controller{
 				$models->address,
 				$models->email,
 				$models->flag,
-				'<i class="choose-client icon-plus" aria-hidden="true" data-id="'.$models->idclient.'"></i>'
+				'<i class="choose-client icon-plus" aria-hidden="true" data-id="'.$models->idclient.';'.$models->name.'"></i>'
 			);
 		endforeach;
 

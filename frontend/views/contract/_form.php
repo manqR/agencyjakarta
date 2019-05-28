@@ -13,10 +13,17 @@ $this->registerJs("
     }
     $(document).on(\"click\", \".choose-client\", function () {		
         var data = $(this).data('id');
-        $('.clientID').val(data);
+        var arr = data.split(';');
+
+        $('.clientID').val(arr[0]);
+        $('.clientName').val(arr[1]);
         $('.client').modal('hide');      
     });
     Client();
+
+    $(\".datepicker\").datepicker({ 
+        format: 'yyyy-mm-dd'
+    });
 
 ");
 $this->registerCss("
@@ -35,7 +42,7 @@ $this->registerCss("
 
     <label>Client ID</label>
     <div class="input-group m-b">
-        <input type="text" class="form-control clientID" readonly>
+        <input type="text" class="form-control clientName" readonly>
         <span class="input-group-addon"><i class="search-open-icon icon-magnifier" aria-hidden="true" title="Search Client" data-toggle="modal" data-target=".client"></i></span>
     </div>
     <?= $form->field($model, 'idclient')->hiddenInput(['maxlength' => true,'class'=>'clientID'])->label(false)?>
@@ -46,7 +53,7 @@ $this->registerCss("
 
     <?= $form->field($model, 'pic_email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'start_date')->textInput() ?>
+    <?= $form->field($model, 'start_date')->textInput(['class'=>'form-control m-b-1 datepicker','data-provide'=>'datepicker','style' => 'width: 100%']) ?>                
 
     <?= $form->field($model, 'end_date')->textInput() ?>
 
