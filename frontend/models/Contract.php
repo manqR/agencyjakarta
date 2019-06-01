@@ -18,6 +18,7 @@ use Yii;
  * @property string $description
  * @property int $contract_status
  * @property int $payment_status
+ * @property double $cost
  * @property string $upload_file
  * @property string $created_date
  * @property string $created_by
@@ -38,16 +39,18 @@ class Contract extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public function rules()
     {
         return [
-            [['contract_id', 'idclient', 'pic_name', 'pic_phone', 'start_date', 'number_of_spg', 'contract_status', 'payment_status', 'created_date', 'created_by'], 'required'],
+            [['contract_id', 'idclient','cost', 'pic_name', 'pic_phone', 'start_date', 'number_of_spg', 'contract_status', 'payment_status', 'created_date', 'created_by'], 'required'],
             [['idclient', 'number_of_spg', 'contract_status', 'payment_status'], 'integer'],
             [['start_date', 'end_date', 'created_date', 'update_date'], 'safe'],
             [['description'], 'string'],
             [['pic_email'], 'email'],
             [['contract_id', 'pic_phone'], 'string', 'max' => 20],
-            [['pic_name', 'pic_email', 'upload_file', 'created_by', 'update_by'], 'string', 'max' => 50],
+            [['upload_file'], 'file', 'extensions' => 'xlsx,xls,docx,doc,pdf,jpg,png'],
+            [['pic_name', 'pic_email', 'created_by', 'update_by'], 'string', 'max' => 50],
         ];
     }
 
@@ -58,6 +61,7 @@ class Contract extends \yii\db\ActiveRecord
     {
         return [
             'contract_id' => 'Contract ID',
+            'cost' => 'Cost',
             'idclient' => 'Idclient',
             'pic_name' => 'Pic Name',
             'pic_phone' => 'Pic Phone',
@@ -75,5 +79,9 @@ class Contract extends \yii\db\ActiveRecord
             'update_by' => 'Update By',
             'urutan' => 'Urutan',
         ];
+    }
+
+    public function getClient(){
+        return $this->hasOne(Client::className(), ['idclient' => 'idclient']);
     }
 }

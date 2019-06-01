@@ -24,7 +24,8 @@ class AppAsset extends AssetBundle
         'styles/animate.css',
         'styles/app.css',
         'styles/app.skins.css',
-        'vendors/summernote/dist/summernote.css',  
+        'vendors/summernote/dist/summernote.css', 
+        'vendors/sweetalert/dist/sweetalert.css',
     ];
     public $js = [
         'scripts/helpers/modernizr.js',
@@ -45,6 +46,7 @@ class AppAsset extends AssetBundle
         'scripts/helpers/sameheight.js',
         'scripts/forms/plugins.js',
         'inc/apiTable.js',
+        'vendors/sweetalert/dist/sweetalert.min.js',
 
 
         

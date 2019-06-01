@@ -88,6 +88,14 @@
     <!-- main navigation -->
     <nav role="navigation">
         <ul class="nav">
+            <?=		''		  
+                //Html::beginForm(['/site/logout'], 'post')
+                //. Html::submitButton(
+                //    'Logout',
+                //    ['class' => 'item-logout']
+                //)
+                //. Html::endForm()
+            ?>
             <!-- dashboard -->
             <li>
                 <a href="<?= Yii::$app->homeUrl; ?>">
@@ -116,10 +124,16 @@
                         </a>
                     </li>
                     <li>
+                        <a href="?r=tagihan-client/index">
+                        <span>Invoice</span>
+                        </a>
+                    </li>  
+                    <li>
                         <a href="?r=client-payment/index">
                         <span>Payment</span>
                         </a>
                     </li>                   
+                                    
                 </ul>
             </li>
             <!-- /Client -->

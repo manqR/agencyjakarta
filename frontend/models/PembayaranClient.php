@@ -7,11 +7,11 @@ use Yii;
 /**
  * This is the model class for table "pembayaran_client".
  *
- * @property int $payment_number
+ * @property string $payment_number
  * @property string $invoice_id
  * @property string $payment_menthod
  * @property string $bank_name
- * @property int $account_name
+ * @property string $account_name
  * @property string $payment_date
  * @property string $prove_file
  * @property double $nominal
@@ -20,10 +20,12 @@ use Yii;
  * @property int $status
  * @property int $urutan
  */
+
+
 class PembayaranClient extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -31,22 +33,22 @@ class PembayaranClient extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['payment_number', 'invoice_id', 'payment_menthod', 'payment_date', 'nominal', 'create_date', 'create_by', 'status'], 'required'],
-            [['payment_number', 'account_name', 'status'], 'integer'],
-            [['payment_date', 'create_date'], 'safe'],
-            [['invoice_id'], 'string', 'max' => 20],
-            [['payment_menthod', 'bank_name', 'prove_file', 'create_by'], 'string', 'max' => 50],
+            [['payment_date', 'create_date'], 'safe'],            
+            [['status'], 'integer'],
+            [['payment_number', 'invoice_id'], 'string', 'max' => 20],
+            [['payment_menthod', 'bank_name', 'account_name', 'prove_file', 'create_by'], 'string', 'max' => 50],
             [['payment_number'], 'unique'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {

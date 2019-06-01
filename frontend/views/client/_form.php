@@ -18,8 +18,12 @@ use frontend\models\City;
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label('Client Name') ?>
-
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?php
+        if($model->isNewRecord){
+            echo $form->field($model, 'password')->passwordInput(['maxlength' => true]);
+        }
+    ?>
+    
 
     <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
 

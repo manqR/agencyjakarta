@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel frontend\models\SpgSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Spgs';
+$this->title = 'SPG';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="spg-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Spg', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(' Add SPG', ['create'], ['class' => 'btn btn-success fa fa-plus']) ?>
     </p>
 
     <?= GridView::widget([

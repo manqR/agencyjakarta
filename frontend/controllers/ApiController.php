@@ -4,6 +4,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\Html;
 use yii\web\Response;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,9 +16,11 @@ use frontend\models\SpgSocial;
 use frontend\models\SpgExperience;
 use frontend\models\Contract;
 use frontend\models\Client;
+use frontend\models\TagihanClient;
+use frontend\models\PembayaranClient;
 
 
-
+include 'inc/money.php';
 class ApiController extends Controller{
 
     
@@ -368,7 +371,7 @@ class ApiController extends Controller{
 				$models->address,
 				$models->email,
 				$models->flag,
-				'<i class="choose-client icon-plus" aria-hidden="true" data-id="'.$models->idclient.'"></i>'
+				'<i class="choose-client icon-plus" aria-hidden="true" data-id="'.$models->idclient.';'.$models->name.'"></i>'
 			);
 		endforeach;
 
@@ -396,7 +399,7 @@ class ApiController extends Controller{
 				$models->client_id,
 				$models->nominal,
 				$models->due_date,
-				'<i class="choose-invoice icon-plus" aria-hidden="true" data-id="'.$models->invoice_id.'"></i>'
+				'<i class="choose-invoice icon-plus" aria-hidden="true" data-id="'.$models->invoice_id.';'.FormatRupiah($models->nominal).'"></i>'
 			);
 		endforeach;
 
@@ -406,6 +409,45 @@ class ApiController extends Controller{
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		return $data;
 
+	}
+
+	public function actionPaymentList($id){
+
+		$model = PembayaranClient::findAll(['invoice_id'=>$id]);
+		$output = array();
+		$status = '';
+		
+		foreach($model as $i => $models):
+		
+			if($models->status == 0){
+				$status =  '<span class="label label-danger">Reject</span>';
+				$action = '<span class="glyphicon glyphicon-remove text-danger " />';
+			}else if($models->status == 1){
+				$status = '<span class="label label-success">Approve</span>';
+				$action = '<span class="glyphicon glyphicon-ok text-success" />';
+			}else{
+				$status = '<span class="label label-warning">Pending</span>';
+				$action = '<span class="glyphicon glyphicon-ok actions text-success" aria-hidden="true" data-id="'.$models->payment_number .';1" ></span> | <span class="glyphicon glyphicon-remove actions text-danger"  aria-hidden="true" data-id="'.$models->payment_number .';0"</span>';
+			}       
+
+			$output[$i] = array(
+					$action,
+					$models->payment_number,
+					$models->payment_menthod,
+					$models->bank_name,
+					$models->account_name,
+					$models->payment_date,
+					Html::a($models->prove_file,['//client-payment/download','id'=>$models->payment_number,'file'=>$models->prove_file]),
+					FormatRupiah($models->nominal),
+					$status
+			);
+		endforeach;
+
+		$data = [
+			'data'=>$output
+		];
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		return $data;
 	}
 		
 		

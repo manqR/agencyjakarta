@@ -3,19 +3,24 @@
 namespace frontend\controllers;
 
 use Yii;
+use frontend\models\TagihanClient;
+use frontend\models\Contract;
 use frontend\models\Client;
-use frontend\models\ClientSearch;
+use frontend\models\TagihanClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ClientController implements the CRUD actions for Client model.
+ * TagihanClientController implements the CRUD actions for TagihanClient model.
  */
-class ClientController extends Controller
+
+include 'inc/money.php';
+include 'inc/table.php';
+class TagihanClientController extends Controller
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -30,12 +35,12 @@ class ClientController extends Controller
     }
 
     /**
-     * Lists all Client models.
+     * Lists all TagihanClient models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ClientSearch();
+        $searchModel = new TagihanClientSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,37 +50,41 @@ class ClientController extends Controller
     }
 
     /**
-     * Displays a single Client model.
+     * Displays a single TagihanClient model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        
+        $contract = Contract::findOne(['contract_id'=>$model->contract_id]);
+        $client = Client::findOne($model->client_id);
+
+        $arr = array(
+            $contract,
+            $client
+        );
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'arr' => $arr,
         ]);
+
     }
 
     /**
-     * Creates a new Client model.
+     * Creates a new TagihanClient model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Client();
+        $model = new TagihanClient();
 
-        if ($model->load(Yii::$app->request->post())){
-            
-            $model->created_date = date('Y-m-d H:i:s');                        
-            $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-     
-            if($model->save(false)){
-                Yii::$app->session->setFlash('success');
-            }
-            
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->urutan]);
         }
 
         return $this->render('create', [
@@ -84,7 +93,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Updates an existing Client model.
+     * Updates an existing TagihanClient model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -94,14 +103,8 @@ class ClientController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())){
-            
-            
-            if($model->save(false)){
-                Yii::$app->session->setFlash('success');
-            }
-            
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->urutan]);
         }
 
         return $this->render('update', [
@@ -110,7 +113,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Deletes an existing Client model.
+     * Deletes an existing TagihanClient model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -124,15 +127,15 @@ class ClientController extends Controller
     }
 
     /**
-     * Finds the Client model based on its primary key value.
+     * Finds the TagihanClient model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Client the loaded model
+     * @return TagihanClient the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Client::findOne($id)) !== null) {
+        if (($model = TagihanClient::findOne($id)) !== null) {
             return $model;
         }
 

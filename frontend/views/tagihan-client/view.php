@@ -4,46 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\PembayaranClient */
+/* @var $model frontend\models\TagihanClient */
 
-$this->title = $model->payment_number;
-$this->params['breadcrumbs'][] = ['label' => 'Client Payment', 'url' => ['index']];
+$this->title = $model->invoice_id;
+$this->params['breadcrumbs'][] = ['label' => 'Client Invoice', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
-
-$this->registerJs("
-    $(document).on(\"click\", \".actions\", function () {		
-        var datas = $(this).data('id');
-        var arr = datas.split(';');
-
-        console.log(arr[1]);
-        var act = '';
-        if(arr[1] == 1){
-            act = 'Approve';
-        }else{
-            act = 'Reject';
-        }
-        swal({
-            title: 'Are You Sure ?',
-            text: act +' this payment ?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'Yes, '+act+'!',
-            closeOnConfirm: false
-        }, function() {			
-            $.post('?r=client-payment/action-payment',{
-                data: datas
-            },
-            function(data, status){                
-                showPayment();                    
-                swal('Saving!', 'Payment Succesfully '+act, 'success');                                                                 
-            });
-        });
-                                                                
-    })    
-
-");
+\yii\web\YiiAsset::register($this);
 
 $this->registerCss("
 
@@ -78,6 +44,7 @@ $this->registerCss("
     
 ");
 
+
 $this->registerJs("
     function showPayment(){
         tableShow('.payments','?r=api/payment-list&id='+'$model->invoice_id');
@@ -85,7 +52,6 @@ $this->registerJs("
     showPayment();
 
 ");
-
 
 ?>
 <div class="pembayaran-client-view card card-block">

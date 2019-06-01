@@ -12,6 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="contract-index">
 
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div>
+            <div class="alert alert-success">Action Successfull ! </div>
+        </div>
+    <?php endif; ?>
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -26,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'contract_id',
-            'idclient',
+            [
+                'label'=>'Client Name',
+                'attribute'=>'clientName',
+                'value'=>'client.name',
+            ], 
             'pic_name',
             'pic_phone',
             'pic_email:email',

@@ -2,10 +2,36 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Contract */
 /* @var $form yii\widgets\ActiveForm */
+
+
+$this->registerJs("
+				
+	function formatRupiah(angka, prefix){
+		var number_string = angka.value.replace(/[^,\d]/g, '').toString(),
+			split    = number_string.split(','),
+			sisa     = split[0].length % 3,
+			rupiah     = split[0].substr(0, sisa),
+			ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+			
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+		
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+	}
+	
+	function formatAsRupiah(el) {
+		
+		el.value = formatRupiah(el);					
+	}",
+View::POS_HEAD);
 
 $this->registerJs("
     function Client(){
@@ -14,6 +40,8 @@ $this->registerJs("
     $(document).on(\"click\", \".choose-client\", function () {		
         var data = $(this).data('id');
         var arr = data.split(';');
+
+        console.log(data);
 
         $('.clientID').val(arr[0]);
         $('.clientName').val(arr[1]);
@@ -36,13 +64,20 @@ $this->registerCss("
 
 <div class="contract-form card card-block">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php  $form = ActiveForm::begin([
+    	'options'=>[
+    	        'enctype'=>'multipart/form-data',
+    	        ]			
+    	    ]); 
+		
+           
+    ?> 
 
     <?= $form->field($model, 'contract_id')->textInput(['maxlength' => true])->label('Contract Number') ?>
 
     <label>Client ID</label>
     <div class="input-group m-b">
-        <input type="text" class="form-control clientName" readonly>
+        <input type="text" class="form-control clientName" value="<?= $model->isNewRecord ? '' : $client->name ?>" readonly>
         <span class="input-group-addon"><i class="search-open-icon icon-magnifier" aria-hidden="true" title="Search Client" data-toggle="modal" data-target=".client"></i></span>
     </div>
     <?= $form->field($model, 'idclient')->hiddenInput(['maxlength' => true,'class'=>'clientID'])->label(false)?>
@@ -55,9 +90,11 @@ $this->registerCss("
 
     <?= $form->field($model, 'start_date')->textInput(['class'=>'form-control m-b-1 datepicker','data-provide'=>'datepicker','style' => 'width: 100%']) ?>                
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date')->textInput(['class'=>'form-control m-b-1 datepicker','data-provide'=>'datepicker','style' => 'width: 100%']) ?>                
 
-    <?= $form->field($model, 'number_of_spg')->textInput() ?>
+    <?= $form->field($model, 'number_of_spg')->textInput(['type'=>'number']) ?>
+    
+    <?= $form->field($model, 'cost')->textInput(['onkeyup' => 'js:formatAsRupiah(this);' ]) ?>
     
     <?= $form->field($model, 'description')->textarea(['rows' => 6,'class'=>'summernote']) ?>
 
@@ -70,7 +107,8 @@ $this->registerCss("
     ?>
 
     <?= $form->field($model, 'upload_file')->fileInput(['maxlength' => true]) ?>
-
+    <?= ($model->isNewRecord ? '' : Html::a(isset($model->upload_file) ?  $model->upload_file : '',['download','id'=>str_replace(' ', '', $model->contract_id) ,'file'=>$model->upload_file],['style'=>'color:#c0392b'])) ?>
+            
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

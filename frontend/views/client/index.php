@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if (Yii::$app->session->hasFlash('success')): ?>
         <div>
-            <div class="alert alert-success">Insert Successfull ! </div>
+            <div class="alert alert-success">Action Successfull ! </div>
         </div>
     <?php endif; ?>
     <h1><?= Html::encode($this->title) ?></h1>

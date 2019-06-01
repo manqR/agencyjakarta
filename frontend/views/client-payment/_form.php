@@ -42,10 +42,17 @@ $this->registerJs("
     }
     $(document).on(\"click\", \".choose-invoice\", function () {		
         var data = $(this).data('id');
-        $('.invoiceID').val(data);
+        var arr = data.split(';');
+
+        $('.invoiceID').val(arr[0]);
+        $('#billing').val(arr[1]);
         $('.invoice').modal('hide');      
     });
     Invoice();
+
+    $(\".datepicker\").datepicker({ 
+        format: 'yyyy-mm-dd'
+    });
 
 ");
 $this->registerCss("
@@ -67,8 +74,6 @@ $this->registerCss("
            
     ?> 
 
-    <?= $form->field($model, 'payment_number')->textInput() ?>
-
     <label>Invoice ID</label>
     <div class="input-group m-b">
         <input type="text" class="form-control invoiceID" readonly>
@@ -76,7 +81,7 @@ $this->registerCss("
     </div>    
     <?= $form->field($model, 'invoice_id')->hiddenInput(['maxlength' => true,'class'=>'invoiceID'])->label(false)?>
 
-    <?= $form->field($model, 'payment_menthod', ['options' => ['tag' => 'false']])-> dropDownList([1=> 'Cash', 0=>'Transfer'],
+    <?= $form->field($model, 'payment_menthod', ['options' => ['tag' => 'false']])-> dropDownList(['Cash'=> 'Cash', 'Transfer'=>'Transfer'],
         ['prompt'=>'- Select -','class'=>'select2 m-b-1','style' => 'width: 100%']);  
     ?>
 
@@ -88,11 +93,16 @@ $this->registerCss("
 
     <?= $form->field($model, 'account_name')->textInput() ?>
 
-    <?= $form->field($model, 'payment_date')->textInput() ?>
+    <?= $form->field($model, 'payment_date')->textInput(['class'=>'form-control m-b-1 datepicker','data-provide'=>'datepicker','style' => 'width: 100%']) ?>                
 
     <?= $form->field($model, 'prove_file')->fileInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'nominal')->textInput(['onkeyup' => 'js:formatAsRupiah(this);' ])->label('Nominal') ?>
+
+    <div class="form-group">
+        <label>Billing</label>   
+        <input type="text" class="form-control" readonly name="billing" id="billing" />
+    </div>
 
     <?= $form->field($model, 'status', ['options' => ['tag' => 'false']])-> dropDownList([1=> 'Approve', 0=>'Reject'],
         ['prompt'=>'- Select -','class'=>'select2 m-b-1','style' => 'width: 100%']);  
