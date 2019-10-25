@@ -18,6 +18,7 @@ use frontend\models\Contract;
 use frontend\models\Client;
 use frontend\models\TagihanClient;
 use frontend\models\PembayaranClient;
+use frontend\models\Schedule;
 
 
 include 'inc/money.php';
@@ -440,6 +441,42 @@ class ApiController extends Controller{
 					Html::a($models->prove_file,['//client-payment/download','id'=>$models->payment_number,'file'=>$models->prove_file]),
 					FormatRupiah($models->nominal),
 					$status
+			);
+		endforeach;
+
+		$data = [
+			'data'=>$output
+		];
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		return $data;
+	}
+
+	public function actionScheduleList($id){
+
+		$model = Schedule::findAll(['contract_id'=>$id]);
+
+		$output = array();
+
+		
+
+		foreach($model as $i => $models):
+
+			$action =   Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>', ['update', 'id' => $models->urutan]) .' | '.
+						Html::a('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', ['delete', 'id' => $models->urutan], [						
+								'data' => [
+									'confirm' => 'Are you sure you want to delete this item?',
+									'method' => 'post',
+								],
+						]);
+
+			$output[$i] = array(
+						$models->date_period,
+						$models->time_period,
+						$models->limit,
+						$models->status,
+						$models->created_date,
+						$models->created_by,
+						$action
 			);
 		endforeach;
 

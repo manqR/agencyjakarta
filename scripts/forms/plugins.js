@@ -10,8 +10,6 @@
   //   horizontal: true
   // });
 
-  // // Timepicker
-  // $('.time-picker').timepicker();
 
   // // Clockpicker
   // $('.clockpicker').clockpicker({
@@ -120,6 +118,11 @@
 
   // Select2 plugin
   $('.select2').select2();
+
+
+  // Timepicker
+  $('.time-picker').timepicker();
+
 
   // // Selectize plugin
   // $('#input-tags').selectize({

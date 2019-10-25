@@ -175,7 +175,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?r=event/schedule">
+                        <a href="?r=schedule/index">
                         <span>Schedule</span>
                         </a>
                     </li>                    
